@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const UserProgressManagement = () => {
+const UserProgressManagement2 = () => {
   const [slots, setSlots] = useState(
     Array.from({ length: 15 }, () => ({
       tier1: [],
@@ -97,49 +97,56 @@ const UserProgressManagement = () => {
       <button onClick={addUser}>Create New User</button>
 
       <div>
-        {slots.map((slot, index) => (
-          <div key={index}>
-            <h3>Slot {index + 1}</h3>
-            <div>
-              <h4>Tier 1:</h4>
-              {slot.tier1.length === 0
-                ? "No Users"
-                : slot.tier1.map((user, idx) => (
-                    <p key={idx}>
-                      {user.userName} - {user.status}
-                      <br />
-                      Purchase Amount: ${user.purchaseAmount}
-                      <br />
-                      Activation Fee: ${user.activationFee}
-                      <br />
-                      Upgradation Fee: ${user.upgradationFee}
-                    </p>
-                  ))}
-            </div>
-            <div>
-              <h4>Tier 2:</h4>
-              {slot.tier2.length === 0
-                ? "No Users"
-                : slot.tier2.map((user, idx) => (
-                    <p key={idx}>
-                      {user.userName} - {user.status}
-                      <br />
-                      Purchase Amount: ${user.purchaseAmount}
-                      <br />
-                      Activation Fee: ${user.activationFee}
-                      <br />
-                      Upgradation Fee: ${user.upgradationFee}
-                    </p>
-                  ))}
-            </div>
-          </div>
-        ))}
+        <h3>Slot Data</h3>
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Slot</th>
+              <th>Tier</th>
+              <th>User Name</th>
+              <th>Status</th>
+              <th>Purchase Amount</th>
+              <th>Activation Fee</th>
+              <th>Upgradation Fee</th>
+            </tr>
+          </thead>
+          <tbody>
+            {slots.map((slot, slotIndex) => (
+              <>
+                {/* Render Tier 1 */}
+                {slot.tier1.map((user, idx) => (
+                  <tr key={`tier1-${slotIndex}-${idx}`}>
+                    <td>{slotIndex + 1}</td>
+                    <td>Tier 1</td>
+                    <td>{user.userName}</td>
+                    <td>{user.status}</td>
+                    <td>${user.purchaseAmount}</td>
+                    <td>${user.activationFee}</td>
+                    <td>${user.upgradationFee}</td>
+                  </tr>
+                ))}
+                {/* Render Tier 2 */}
+                {slot.tier2.map((user, idx) => (
+                  <tr key={`tier2-${slotIndex}-${idx}`}>
+                    <td>{slotIndex + 1}</td>
+                    <td>Tier 2</td>
+                    <td>{user.userName}</td>
+                    <td>{user.status}</td>
+                    <td>${user.purchaseAmount}</td>
+                    <td>${user.activationFee}</td>
+                    <td>${user.upgradationFee}</td>
+                  </tr>
+                ))}
+              </>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {completedUsers.length > 0 && (
         <div>
           <h3>Completed Users</h3>
-          <table>
+          <table border="1">
             <thead>
               <tr>
                 <th>User Name</th>
@@ -167,4 +174,4 @@ const UserProgressManagement = () => {
   );
 };
 
-export default UserProgressManagement;
+export default UserProgressManagement2;
