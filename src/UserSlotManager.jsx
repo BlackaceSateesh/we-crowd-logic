@@ -22,12 +22,15 @@ const Plan = ({ planAmount, users }) => {
     const teamIndex = tier1.length;
     const parent = teamIndex === 0 ? "admin" : users[teamIndex - 1];
     const nextUsers = users.slice(teamIndex * 2, (teamIndex + 1) * 2);
+    console.log("parent", parent, "nextUsers", nextUsers)
+
 
     if (nextUsers.length === 2) {
       // Calculate purchase amounts and fees
       const purchaseAmount = 25;
       const activationFee = purchaseAmount * 0.2;
       const upgradeFee = activationFee * 0.5;
+
 
       // Update Tier 1 with new team
       setTier1([...tier1, { parent, users: nextUsers, status: "done", purchaseAmount, activationFee, upgradeFee }]);
