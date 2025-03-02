@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TwoIntoTwoTierUserEnter = () => {
   const userCountRef = useRef(0);
@@ -8,11 +8,13 @@ const TwoIntoTwoTierUserEnter = () => {
   const [upgradationFee, setUpgradationFee] = useState(activationFee * 0.5);
   const [rebirthFee, setRebirthFee] = useState(activationFee * 0.2);
   const [totalNetReward, setTotalNetReward] = useState(activationFee * 0.3);
+  const [totalActivation, setTotalActivation] = useState(0);
+
+  const [tableData, setTableData] = useState();
   const handleRegisterUser = async () => {
-    userCountRef.current = userCountRef.current + 1;
+    // userCountRef.current = userCountRef.current + 1;
     const userId = `user${userCountRef.current}`;
     const userName = `name${userCountRef.current}`;
-
 
     const payload = {
       purchaseAmount,
@@ -26,16 +28,49 @@ const TwoIntoTwoTierUserEnter = () => {
     console.log(payload);
 
     try {
-      const res= await axios.post("http://192.168.29.221:3000/api/add-user", payload);
-      console.log(res.message)
+      const res = await axios.post(
+        "http://192.168.29.13:3000/api/add-user/two-by-two",
+        payload
+      );
+      console.log(res.message);
     } catch (err) {
       console.log(err);
     }
   };
 
-//   setInterval(() => {
-//     handleRegisterUser()
-//   }, 10);
+  // setInterval(() => {
+  //   handleRegisterUser()
+  // }, 10);
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get("http://147.93.31.66:4000/users/two-by-two");
+      const data = res.data;
+      console.log(res)
+      setTableData(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  // useEffect(() => {
+  //   let count = 0;
+  //   tableData?.users?.map((item) => {
+  //     count = count+1
+  //     if(item.userId == "user0"){
+  //       setTotalActivation((prevTotal) => prevTotal + activationFee);
+  //     }
+  //   });
+  //   console.log("total user count",count)
+  // }, [tableData]);
+  
+  console.log("total activation fee",totalActivation);
+  
+  
+  // /users/two-by-two
+  // /users/two-by-eight
 
   return (
     <>
